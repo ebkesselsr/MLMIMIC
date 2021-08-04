@@ -404,15 +404,15 @@ for (k in 1:nrow(cond)) {
     (mean(est.cr.aov) - int) ^ 2 + sd(est.cr.aov) ^ 2
   
   write.table(outputmlmimic,
-              "./output/outputmlmimic.txt",
+              "outputmlmimic.txt",
               sep = "\t",
               dec = ".")
   write.table(outputml,
-              "./output/outputml.txt",
+              "outputml.txt",
               sep = "\t",
               dec = ".")
   write.table(outputaov,
-              "./output/outputaov.txt",
+              "outputaov.txt",
               sep = "\t",
               dec = ".")
 }
