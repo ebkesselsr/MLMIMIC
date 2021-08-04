@@ -1,0 +1,37 @@
+!This Mplus set up code is used to run the ML-MIMIC model;
+
+TITLE: ML MIMIC model;
+
+DATA: FILE = "mlmimic.dat";
+
+VARIABLE: 
+        NAMES = y1 y2 y3 y4 y5 L1grp L2grp id;
+        CLUSTER = id;
+        WITHIN = L1grp;
+        BETWEEN = L2grp; 
+        MISSING=.;
+
+ANALYSIS: TYPE = TWOLEVEL RANDOM;
+          ESTIMATOR=MLR;
+     
+MODEL: 
+    %WITHIN%
+    fw1 BY y1 y2 y3 y4 y5(n1-n5);  !Within-level factor model;
+    s1 | fw1 ON L1grp;             !Create random slope (s1) of 
+				   !the within-level covariate effect;
+    fw1;	                   !Within factor variance;
+
+    %BETWEEN%
+    fb1 BY y1 y2 y3 y4 y5(n1-n5);  !Between-level factor model;
+    fb1 s1 ON L2grp;               !Regress factor and random slope (s1) 
+                                   !on between-level covariate;
+    s1(a);                         !Store random slope variance;   
+    fb1(b);                        !Store random intercept variance;
+    s1 WITH fb1(c);                !Store covariance random intercept and 
+				   !random slope;
+ 
+ OUTPUT: SAMPSTAT;
+ MODEL CONSTRAINT: NEW(COR);
+ COR = c/(sqrt(a)*sqrt(b));        !Use previous stored parameters to 
+                                   !calculate correlation;
+ 
