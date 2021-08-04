@@ -5,9 +5,9 @@
 require(xtable)
 
 #Read tables
-outputmlmimic <- read.table("./output/outputmlmimic.txt", sep = "\t", dec = ".")
-outputml      <- read.table("./output/outputml.txt", sep = "\t", dec = ".")
-outputaov     <- read.table("./output/outputaov.txt", sep = "\t", dec = ".")
+outputmlmimic <- read.table("outputmlmimic.txt", sep = "\t", dec = ".")
+outputml      <- read.table("outputml.txt", sep = "\t", dec = ".")
+outputaov     <- read.table("outputaov.txt", sep = "\t", dec = ".")
 
 outputmlmimic <- outputmlmimic[order(outputmlmimic$gamma,
                                      outputmlmimic$tau,
